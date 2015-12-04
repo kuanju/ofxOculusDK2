@@ -294,7 +294,7 @@ void ofxOculusDK2::updateHmdSettings(){
         
         renderTarget.allocate(render_settings);
         backgroundTarget.allocate(renderTargetSize.w/2, renderTargetSize.h);
-
+        guiTarget.allocate(renderTargetSize.w/2, renderTargetSize.h);
         
         bRenderTargetSizeChanged = false;
     }
@@ -901,6 +901,37 @@ void ofxOculusDK2::endOverlay(){
     overlayTarget.end();
 }
 
+
+void ofxOculusDK2::beginGui(){
+    if(!bSetup) return;
+    guiTarget.begin(false);
+    ofClear(0.0, 0.0, 0.0);
+    ofPushView();
+    ofPushMatrix();
+    ofViewport(getOculusViewport());
+
+}
+void ofxOculusDK2::endGui(){
+    if(!bSetup) return;
+    ofPopMatrix();
+    ofPopView();
+    guiTarget.end();
+
+}
+
+void ofxOculusDK2::renderGui(ovrEyeType eye){
+        glPushAttrib(GL_ALL_ATTRIB_BITS);
+        glDisable(GL_LIGHTING);
+        ofDisableDepthTest();
+        
+        guiTarget.getTexture().draw(toOf(eyeRenderViewport[eye]));
+        //        cout<<"eye: "<<eye<<" pos: "<< toOf(eyeRenderViewport[eye])<<endl;
+        //        cout<<"bg:"<<backgroundTarget.getWidth()<<endl;
+        
+        glPopAttrib();
+}
+
+
 void ofxOculusDK2::beginLeftEye(){
 	
 	if(!bSetup) return;
@@ -934,6 +965,8 @@ void ofxOculusDK2::endLeftEye(){
 	
 	ofPopMatrix();
 	ofPopView();
+    
+    renderGui(ovrEye_Left);
 }
 
 void ofxOculusDK2::beginRightEye(){
@@ -954,7 +987,10 @@ void ofxOculusDK2::endRightEye(){
 
 	ofPopMatrix();
 	ofPopView();
-	renderTarget.end();	
+    
+    renderGui(ovrEye_Right);
+
+	renderTarget.end();
 }
 
 void ofxOculusDK2::renderOverlay(){

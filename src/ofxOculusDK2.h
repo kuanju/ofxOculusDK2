@@ -61,6 +61,12 @@ class ofxOculusDK2
 	void beginOverlay(float overlayZDistance = -150, float width = 256, float height = 256);
     void endOverlay();
 
+    
+    //draw gui, after after eyes
+    void beginGui();
+    void endGui();
+
+    
 	void beginLeftEye();
 	void endLeftEye();
 	
@@ -153,6 +159,10 @@ class ofxOculusDK2
 	ofFbo& getRenderTarget(){
         return renderTarget;
     }
+    ofFbo& getGuiTarget(){
+        return guiTarget;
+    }
+
     
 	ofRectangle getOculusViewport();
 	bool isHD();
@@ -221,6 +231,7 @@ class ofxOculusDK2
 	ofFbo renderTarget;
     ofFbo backgroundTarget;
 	ofFbo overlayTarget;
+    ofFbo guiTarget;
 	ofShader distortionShader;
     
     ofShader debugShader;   // XXX mattebb
@@ -239,6 +250,7 @@ class ofxOculusDK2
     ofMatrix4x4 getViewMatrix(ovrEyeType eye);
 	
 	void renderOverlay();
+    void renderGui(ovrEyeType eye); //unlike overlay, gui follows view port;
 
     void updateHmdSettings();
     unsigned int setupDistortionCaps();
