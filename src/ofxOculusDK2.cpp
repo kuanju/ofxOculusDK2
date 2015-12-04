@@ -277,9 +277,16 @@ void ofxOculusDK2::updateHmdSettings(){
         
         ovrSizei recommenedTex0Size = ovrHmd_GetFovTextureSize(hmd, ovrEye_Left, eyeFov[0], pixelDensity);
         ovrSizei recommenedTex1Size = ovrHmd_GetFovTextureSize(hmd, ovrEye_Right, eyeFov[1], pixelDensity);
+
         
-        renderTargetSize.w = recommenedTex0Size.w + recommenedTex1Size.w;
-        renderTargetSize.h = max ( recommenedTex0Size.h, recommenedTex1Size.h );
+        // kjwu 12/03/2015 hacking to get the resolution right for dk2.
+        
+//        renderTargetSize.w = recommenedTex0Size.w + recommenedTex1Size.w;
+//        renderTargetSize.h = max ( recommenedTex0Size.h, recommenedTex1Size.h );
+
+        renderTargetSize.w = 1920;
+        renderTargetSize.h = 1080;
+
         
         ofFbo::Settings render_settings = renderTargetFboSettings();
         render_settings.width = renderTargetSize.w;
@@ -287,6 +294,7 @@ void ofxOculusDK2::updateHmdSettings(){
         
         renderTarget.allocate(render_settings);
         backgroundTarget.allocate(renderTargetSize.w/2, renderTargetSize.h);
+
         
         bRenderTargetSizeChanged = false;
     }
@@ -699,7 +707,11 @@ void ofxOculusDK2::setupEyeParams(ovrEyeType eye){
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glDisable(GL_LIGHTING);
 		ofDisableDepthTest();
-		backgroundTarget.getTexture().draw(toOf(eyeRenderViewport[eye]));
+        
+        backgroundTarget.getTexture().draw(toOf(eyeRenderViewport[eye]));
+//        cout<<"eye: "<<eye<<" pos: "<< toOf(eyeRenderViewport[eye])<<endl;
+//        cout<<"bg:"<<backgroundTarget.getWidth()<<endl;
+
 		glPopAttrib();
 	}
     
