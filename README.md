@@ -1,3 +1,5 @@
+--Modified for 1920x1080 DK2 on Mac OSX 10.0 xcode 7 OF 0.9
+
 ofxOculusRift
 ================
 
