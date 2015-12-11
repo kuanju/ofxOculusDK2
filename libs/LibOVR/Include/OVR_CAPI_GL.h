@@ -50,7 +50,7 @@ typedef struct ovrGLConfigData_s
 } ovrGLConfigData;
 
 #if defined(__cplusplus)
-    //static_assert(sizeof(ovrRenderAPIConfig) >= sizeof(ovrGLConfigData), "Insufficient size.");
+    static_assert(sizeof(ovrRenderAPIConfig) >= sizeof(ovrGLConfigData), "Insufficient size.");
 #endif
 
 /// Contains OpenGL-specific rendering information.
@@ -66,6 +66,10 @@ typedef struct ovrGLTextureData_s
     ovrTextureHeader Header;    ///< General device settings.
     GLuint           TexId;     ///< The OpenGL name for this texture.
 } ovrGLTextureData;
+
+#if defined(__cplusplus)
+    static_assert(sizeof(ovrTexture) >= sizeof(ovrGLTextureData), "Insufficient size.");
+#endif
 
 /// Contains OpenGL-specific texture information.
 typedef union ovrGLTexture_s

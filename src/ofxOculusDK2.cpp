@@ -343,9 +343,14 @@ void ofxOculusDK2::updateHmdSettings(){
     EyeTexture[1] = EyeTexture[0];
     EyeTexture[1].Header.RenderViewport = eyeRenderViewport[1];
     
-    // set the tex IDs from the ofFbo
-    ((ovrGLTexture &)EyeTexture[0]).OGL.TexId = renderTarget.getId();
-    ((ovrGLTexture &)EyeTexture[1]).OGL.TexId = renderTarget.getId();
+    // set the tex IDs from the ofFbo of090
+    //((ovrGLTexture &)EyeTexture[0]).OGL.TexId = renderTarget.getId();
+    //((ovrGLTexture &)EyeTexture[1]).OGL.TexId = renderTarget.getId();
+	
+	// set the tex IDs from the ofFbo of084
+	((ovrGLTexture &)EyeTexture[0]).OGL.TexId = renderTarget.getFbo();
+    ((ovrGLTexture &)EyeTexture[1]).OGL.TexId = renderTarget.getFbo();
+
 
     if (!ovrHmd_ConfigureRendering( hmd, &config, distortionCaps, eyeFov, eyeRenderDesc ))
         return;
@@ -708,7 +713,7 @@ void ofxOculusDK2::setupEyeParams(ovrEyeType eye){
 		glDisable(GL_LIGHTING);
 		ofDisableDepthTest();
         
-        backgroundTarget.getTexture().draw(toOf(eyeRenderViewport[eye]));
+        backgroundTarget.getTextureReference().draw(toOf(eyeRenderViewport[eye]));
 //        cout<<"eye: "<<eye<<" pos: "<< toOf(eyeRenderViewport[eye])<<endl;
 //        cout<<"bg:"<<backgroundTarget.getWidth()<<endl;
 
@@ -924,7 +929,7 @@ void ofxOculusDK2::renderGui(ovrEyeType eye){
         glDisable(GL_LIGHTING);
         ofDisableDepthTest();
         
-        guiTarget.getTexture().draw(toOf(eyeRenderViewport[eye]));
+        guiTarget.getTextureReference().draw(toOf(eyeRenderViewport[eye]));
         //        cout<<"eye: "<<eye<<" pos: "<< toOf(eyeRenderViewport[eye])<<endl;
         //        cout<<"bg:"<<backgroundTarget.getWidth()<<endl;
         
@@ -1017,9 +1022,9 @@ void ofxOculusDK2::renderOverlay(){
 	}
 	
 	ofEnableAlphaBlending();
-	overlayTarget.getTexture().bind();
+	overlayTarget.getTextureReference().bind();
 	overlayMesh.draw();
-	overlayTarget.getTexture().unbind();
+	overlayTarget.getTextureReference().unbind();
 	
 	glPopAttrib();
 	ofPopMatrix();
