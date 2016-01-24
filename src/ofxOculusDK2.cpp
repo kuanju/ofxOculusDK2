@@ -925,12 +925,19 @@ void ofxOculusDK2::renderGui(ovrEyeType eye){
 //        ofDrawRectangle(0, 0, 960, 1080);
 //        ofSetColor(255);
 
+        ofPushMatrix();
+        ofScale(1,-1); //the rendertarget is upside down
+
         if(eye == ovrEye_Left){ //left eye
-            guiTarget.getTexture().drawSubsection(0,0,guiTarget.getWidth()/2,guiTarget.getHeight(),0,0);
+            guiTarget.getTexture().drawSubsection(0,-guiTarget.getHeight(),guiTarget.getWidth()/2,guiTarget.getHeight(),0,0);
+
         }
         if(eye == ovrEye_Right){ //right eye
-            guiTarget.getTexture().drawSubsection(renderTarget.getWidth()/2,0,guiTarget.getWidth()/2,guiTarget.getHeight(),0,0);
+
+            guiTarget.getTexture().drawSubsection(renderTarget.getWidth()/2,-guiTarget.getHeight(),guiTarget.getWidth()/2,guiTarget.getHeight(),0,0);
         }
+        ofPopMatrix();
+
 
 //        cout<<"eye: "<<eye<<" pos: "<< toOf(eyeRenderViewport[eye])<<endl;
 //        cout<<"gui width:"<<guiTarget.getWidth()<<endl;
