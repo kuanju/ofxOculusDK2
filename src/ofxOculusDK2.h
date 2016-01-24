@@ -199,6 +199,7 @@ class ofxOculusDK2
     
 	bool bUseBackground;
 	bool bUseOverlay;
+    bool bUseGui;
 	float overlayZDistance;
 
     ovrHmd              hmd;
