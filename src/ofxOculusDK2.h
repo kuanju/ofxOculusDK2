@@ -168,6 +168,7 @@ class ofxOculusDK2
 	bool isHD();
 	//allows you to disable moving the camera based on inner ocular distance
 	bool applyTranslation;
+    
 
   private:
     
