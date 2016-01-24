@@ -861,7 +861,7 @@ void ofxOculusDK2::beginBackground(){
 	bUseBackground = true;
 	insideFrame = true;
     backgroundTarget.begin(false);
-    ofClear(0.0, 0.0, 0.0);
+    ofClear(255);
 //    ofPushView();
 //    ofViewport(getOculusViewport());  //draw on 960,1080
 }
