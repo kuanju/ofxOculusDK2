@@ -709,12 +709,13 @@ void ofxOculusDK2::setupEyeParams(ovrEyeType eye){
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glDisable(GL_LIGHTING);
 		ofDisableDepthTest();
+        float offsetY = 100; //hack to align background to gui
         
         if(eye == ovrEye_Left){ //left eye
-            backgroundTarget.getTexture().drawSubsection(0,0,backgroundTarget.getWidth()/2,backgroundTarget.getHeight(),0,0);
+            backgroundTarget.getTexture().drawSubsection(0,offsetY,backgroundTarget.getWidth()/2,backgroundTarget.getHeight(),0,0);
         }
         if(eye == ovrEye_Right){ //right eye
-            backgroundTarget.getTexture().drawSubsection(backgroundTarget.getWidth()/2,0,backgroundTarget.getWidth()/2,backgroundTarget.getHeight(),backgroundTarget.getWidth()/2,0);
+            backgroundTarget.getTexture().drawSubsection(backgroundTarget.getWidth()/2,offsetY,backgroundTarget.getWidth()/2,backgroundTarget.getHeight(),backgroundTarget.getWidth()/2,0);
         }
 //        cout<<"eye: "<<eye<<" pos: "<< toOf(eyeRenderViewport[eye])<<endl;
 //        cout<<"bg:"<<backgroundTarget.getWidth()<<endl;
@@ -925,16 +926,25 @@ void ofxOculusDK2::renderGui(ovrEyeType eye){
 //        ofDrawRectangle(0, 0, 960, 1080);
 //        ofSetColor(255);
 
+//        float border = 200;
+//        ofPushMatrix();
+    
+//        ofDrawRectangle(border, border, guiTarget.getWidth()-border*2, guiTarget.getHeight()-border*2);
+//        ofPopMatrix();
+    
         ofPushMatrix();
         ofScale(1,-1); //the rendertarget is upside down
+        float offsetY = 0;  // hack to align gui to background
+
+    
 
         if(eye == ovrEye_Left){ //left eye
-            guiTarget.getTexture().drawSubsection(0,-guiTarget.getHeight(),guiTarget.getWidth()/2,guiTarget.getHeight(),0,0);
+            guiTarget.getTexture().drawSubsection(0,-guiTarget.getHeight()+offsetY,guiTarget.getWidth()/2,guiTarget.getHeight(),0,0);
 
         }
         if(eye == ovrEye_Right){ //right eye
 
-            guiTarget.getTexture().drawSubsection(renderTarget.getWidth()/2,-guiTarget.getHeight(),guiTarget.getWidth()/2,guiTarget.getHeight(),0,0);
+            guiTarget.getTexture().drawSubsection(renderTarget.getWidth()/2,-guiTarget.getHeight()+offsetY,guiTarget.getWidth()/2,guiTarget.getHeight(),0,0);
         }
         ofPopMatrix();
 
