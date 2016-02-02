@@ -709,7 +709,7 @@ void ofxOculusDK2::setupEyeParams(ovrEyeType eye){
 		glPushAttrib(GL_ALL_ATTRIB_BITS);
 		glDisable(GL_LIGHTING);
 		ofDisableDepthTest();
-        float offsetY = 100; //hack to align background to gui
+        float offsetY = 0; //hack to align background to gui
         
         if(eye == ovrEye_Left){ //left eye
             backgroundTarget.getTexture().drawSubsection(0,offsetY,backgroundTarget.getWidth()/2,backgroundTarget.getHeight(),0,0);
